@@ -1,4 +1,399 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.263.1/font/lucide.min.css" rel="stylesheet">
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a202c;
+            background-color: #f7fafc;
+        }
+
+        /* Hero section */
+        .hero {
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Text content */
+        .hero-content {
+            animation: fadeIn 1s ease-out;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(66, 153, 225, 0.1);
+            color: #3182ce;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: #4a5568;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* Skills section */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .skill-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-item i {
+            color: #3182ce;
+        }
+
+        /* CTA section */
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: #3182ce;
+            color: white;
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #2c5282;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #3182ce;
+            border: 2px solid #3182ce;
+        }
+
+        .btn-secondary:hover {
+            background: #ebf8ff;
+            transform: translateY(-2px);
+        }
+
+        /* Image section */
+        .hero-image {
+            position: relative;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 4/5;
+            border-radius: 2rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Social links */
+        .social-links {
+            position: fixed;
+            left: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .social-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 50%;
+            color: #4a5568;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: #3182ce;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Background decorations */
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, rgba(49, 130, 206, 0.1) 0%, rgba(49, 130, 206, 0.05) 100%);
+            top: 10%;
+            right: 5%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(49, 130, 206, 0.08) 0%, rgba(49, 130, 206, 0.03) 100%);
+            bottom: 10%;
+            left: 5%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .hero-content {
+                order: 2;
+            }
+
+            .hero-image {
+                order: 1;
+            }
+
+            .skills-grid {
+                justify-content: center;
+            }
+
+            .cta-group {
+                justify-content: center;
+            }
+
+            .social-links {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 2rem;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .image-container {
+                max-width: 300px;
+            }
+
+            .cta-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .skills-grid {
+                gap: 0.75rem;
+            }
+
+            .skill-item {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="hero">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <span class="tag">FULL-STACK DEVELOPER</span>
+                    <h1 class="hero-title">AI & SaaS Solutions Expert</h1>
+                    <p class="hero-subtitle">
+                        Transforming complex challenges into elegant digital solutions. 
+                        Specialized in AI integration, scalable architectures, and modern web applications.
+                    </p>
+
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <i class="lucide-code"></i>
+                            Python/Django
+                        </div>
+                        <div class="skill-item">
+                            <i class="lucide-cpu"></i>
+                            AI/ML
+                        </div>
+                        <div class="skill-item">
+                            <i class="lucide-layout"></i>
+                            React.js
+                        </div>
+                        <div class="skill-item">
+                            <i class="lucide-database"></i>
+                            PostgreSQL
+                        </div>
+                        <div class="skill-item">
+                            <i class="lucide-cloud"></i>
+                            AWS
+                        </div>
+                    </div>
+
+                    <div class="cta-group">
+                        <a href="#contact" class="btn btn-primary">
+                            <i class="lucide-message-square"></i>
+                            Let's Collaborate
+                        </a>
+                        <a href="#portfolio" class="btn btn-secondary">
+                            <i class="lucide-briefcase"></i>
+                            View Projects
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <div class="image-container">
+                        <img src="/images/m1.jpg" alt="Professional headshot" class="profile-img">
+                    </div>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="#" class="social-link" aria-label="GitHub">
+                    <i class="lucide-github"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="LinkedIn">
+                    <i class="lucide-linkedin"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Twitter">
+                    <i class="lucide-twitter"></i>
+                </a>
+                <a href="#" class="social-link" aria-label="Email">
+                    <i class="lucide-mail"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
 <html>
 <head>
 <link href="https://cdn.jsdelivr.net/npm/lucide-static@0.263.1/font/lucide.min.css" rel="stylesheet">
@@ -344,4 +739,4 @@ body {
 </main>
 
 </body>
-</html>
+</html> -->
